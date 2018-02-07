@@ -44,6 +44,24 @@ public class GameActivity extends Activity{
         gameSurfaceView = (GameSurfaceView) findViewById(R.id.surfaceView_gamePanel);
         SurfaceHolder surfaceHolder = gameSurfaceView.getHolder();
         surfaceHolder.addCallback(gameSurfaceView);
-    }
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int yPos = 100;
+                while(true) {
+                    if (gameSurfaceView.isReady())
+                        gameSurfaceView.drawDick(yPos);
+                    if(yPos < 1000){
+                        yPos += 10;
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
 }

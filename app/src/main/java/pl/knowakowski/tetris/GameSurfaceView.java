@@ -28,6 +28,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     Bitmap mBitmap;
     Thread thread = null;
     Context ctx;
+    boolean isReady = false;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -36,8 +37,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         ctx = context;
-        thread = new Thread(this);
-        thread.start();
+        //thread = new Thread(this);
+        //thread.start();
     }
 
     public GameSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -48,6 +49,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        System.out.println("onDraw");
         canvas.drawBitmap(mBitmap,0,0,null);//Przy obrocie ekranu sie crash robi
     }
 
@@ -59,12 +61,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
+        System.out.println("surfaceCreated");
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
-
+        System.out.println("surfaceChanged");
+        isReady = true;
+        mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void run() {
-        while (getWidth() == 0); //Wait until SurfaceView will
+        /*while (getWidth() == 0); //Wait until SurfaceView will
         int yPos = 400;
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
         while (true) {
@@ -97,6 +101,26 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             }
             mBitmap.eraseColor(Color.TRANSPARENT);
 
-        }
+        }*/
     }
+
+    public void drawDick(int yPos) {
+        System.out.println("drawDick: " + getWidth() + " " + getHeight() + " " + yPos);
+        System.out.println("btm: " + mBitmap.getWidth() + " " + mBitmap.getHeight());
+        mBitmap.eraseColor(Color.TRANSPARENT);
+        Canvas canvas = new Canvas(mBitmap);
+        Paint paint = new Paint();
+        paint.setColor(Color.YELLOW);
+        canvas.drawCircle(200,yPos,100,paint);
+        canvas.drawCircle(350,yPos,100,paint);
+        canvas.drawRect(230,yPos,320,yPos-400,paint);
+        canvas.drawCircle(275,yPos-400,45,paint);
+        postInvalidate();
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
+
 }
