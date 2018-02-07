@@ -2,33 +2,22 @@ package pl.knowakowski.tetris;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
-import java.util.Random;
-import java.util.logging.Handler;
-
-import static android.content.ContentValues.TAG;
-
-/**
- * Created by krzysiek on 05.02.2018.
- */
-
-public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable
+public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
-    Bitmap mBitmap;
-    Thread thread = null;
-    Context ctx;
-    boolean isReady = false;
+    private Bitmap mBitmap;
+    private boolean isSurfaceReady = false;
+    private float blockWidth = 0;
+    private float blockHeight = 0;
+    private float borderVerticalWidth = 0;
+    private float borderHorizontalWidth = 0;
+
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -36,9 +25,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        ctx = context;
-        //thread = new Thread(this);
-        //thread.start();
     }
 
     public GameSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -49,77 +35,47 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        System.out.println("onDraw");
-        canvas.drawBitmap(mBitmap,0,0,null);//Przy obrocie ekranu sie crash robi
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        //Log.d("dotyk", event.getX()+" "+event.getY());
-        return super.onTouchEvent(event);
+        canvas.drawBitmap(mBitmap,0,0,null);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        System.out.println("surfaceCreated");
+
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
-        System.out.println("surfaceChanged");
-        isReady = true;
+        isSurfaceReady = true;
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
+
+        borderVerticalWidth = (float)getWidth()/111;
+        blockWidth = borderVerticalWidth*10;
+
+        borderHorizontalWidth = (float)getHeight()/221;
+        blockHeight = borderHorizontalWidth*10;
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+        isSurfaceReady = false;
     }
 
-    @Override
-    public void run() {
-        /*while (getWidth() == 0); //Wait until SurfaceView will
-        int yPos = 400;
-        mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
-        while (true) {
-            //mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
-            Canvas canvas = new Canvas(mBitmap);
-            Paint paint = new Paint();
-            paint.setColor(Color.YELLOW);
-            canvas.drawCircle(200,yPos,100,paint);
-            canvas.drawCircle(350,yPos,100,paint);
-            canvas.drawRect(230,yPos,320,yPos-400,paint);
-            canvas.drawCircle(275,yPos-400,45,paint);
-            postInvalidate();
-            if(yPos < 1000){
-                yPos += 10;
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            mBitmap.eraseColor(Color.TRANSPARENT);
-
-        }*/
+    public boolean isSurfaceReady() {
+        return isSurfaceReady;
     }
 
-    public void drawDick(int yPos) {
-        System.out.println("drawDick: " + getWidth() + " " + getHeight() + " " + yPos);
-        System.out.println("btm: " + mBitmap.getWidth() + " " + mBitmap.getHeight());
-        mBitmap.eraseColor(Color.TRANSPARENT);
+    public void drawBlock(int x, int y,Paint paint){
+        float xw = x*borderVerticalWidth + (x-1)*blockWidth;
+        float yw = y*borderHorizontalWidth + (y-1)*blockHeight;
+
         Canvas canvas = new Canvas(mBitmap);
-        Paint paint = new Paint();
-        paint.setColor(Color.YELLOW);
-        canvas.drawCircle(200,yPos,100,paint);
-        canvas.drawCircle(350,yPos,100,paint);
-        canvas.drawRect(230,yPos,320,yPos-400,paint);
-        canvas.drawCircle(275,yPos-400,45,paint);
+        canvas.drawRect(xw,yw,xw + blockWidth,yw + blockHeight,paint);
+
         postInvalidate();
     }
 
-    public boolean isReady() {
-        return isReady;
+    public void clearSurface(){
+        mBitmap.eraseColor(Color.TRANSPARENT);
     }
 
 
