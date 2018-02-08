@@ -15,8 +15,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private boolean isSurfaceReady = false;
     private float blockWidth = 0;
     private float blockHeight = 0;
-    private float borderVerticalWidth = 0;
-    private float borderHorizontalWidth = 0;
+    private float pixelWidth = 0;
+    private float pixelHeight = 0;
 
 
     public GameSurfaceView(Context context) {
@@ -48,11 +48,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         isSurfaceReady = true;
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
 
-        borderVerticalWidth = (float)getWidth()/111;
-        blockWidth = borderVerticalWidth*10;
+        pixelWidth = (float)getWidth()/111;
+        blockWidth = pixelWidth *10;
 
-        borderHorizontalWidth = (float)getHeight()/221;
-        blockHeight = borderHorizontalWidth*10;
+        pixelHeight = (float)getHeight()/221;
+        blockHeight = pixelHeight *10;
     }
 
     @Override
@@ -65,11 +65,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     public void drawBlock(int x, int y,Paint paint){
-        float xw = x*borderVerticalWidth + (x-1)*blockWidth;
-        float yw = y*borderHorizontalWidth + (y-1)*blockHeight;
+        float scaledX = x* pixelWidth + (x-1)*blockWidth;
+        float scaledY = y* pixelHeight + (y-1)*blockHeight;
 
         Canvas canvas = new Canvas(mBitmap);
-        canvas.drawRect(xw,yw,xw + blockWidth,yw + blockHeight,paint);
+        canvas.drawRect(scaledX,scaledY,scaledX + blockWidth,scaledY + blockHeight,paint);
 
         postInvalidate();
     }
