@@ -7,9 +7,7 @@ import java.util.ArrayList;
  */
 
 public class GameController implements Runnable{
-
-    private int panelWidth = 10;
-    private int panelHeight = 20;
+    
     private Thread gameThread = null;
     private boolean isGameRunning = false;
     private int gameInterval = 300;
@@ -24,12 +22,36 @@ public class GameController implements Runnable{
     }
 
     public void moveLeft(){
-        actualBlock.setX(actualBlock.getX() - 1);
+        boolean canMoveLeft = true;
+        for (Block block: gameBoard){
+            if((block.getX()) == (actualBlock.getX() - 1) && (block.getY()) == (actualBlock.getY())) {
+                canMoveLeft = false;
+                break;
+            }
+        }
+
+        if(canMoveLeft){
+            if((actualBlock.getX() - 1) != 0)
+                actualBlock.setX(actualBlock.getX() - 1);
+        }
+
         repaint();
     }
 
     public void moveRight(){
-        actualBlock.setX(actualBlock.getX() + 1);
+        boolean canMoveRight = true;
+        for (Block block: gameBoard){
+            if((block.getX()) == (actualBlock.getX() + 1) && (block.getY()) == (actualBlock.getY())) {
+                canMoveRight = false;
+                break;
+            }
+        }
+
+        if(canMoveRight){
+            if((actualBlock.getX() + 1) != 11)
+                actualBlock.setX(actualBlock.getX() + 1);
+        }
+
         repaint();
     }
 
@@ -43,7 +65,7 @@ public class GameController implements Runnable{
             }
         }
 
-        if(canMoveDown == true){
+        if(canMoveDown){
             if(actualBlock.getY() != 20) //down of board
                 actualBlock.setY(actualBlock.getY() + 1);
             else
