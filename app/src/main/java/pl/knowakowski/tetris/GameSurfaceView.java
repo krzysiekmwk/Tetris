@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
     private Bitmap mBitmap;
@@ -64,19 +66,26 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         return isSurfaceReady;
     }
 
-    public void drawBlock(int x, int y,Paint paint){
+    private void drawBlock(int x, int y,Paint paint, Canvas canvas){
         float scaledX = x* pixelWidth + (x-1)*blockWidth;
         float scaledY = y* pixelHeight + (y-1)*blockHeight;
 
-        Canvas canvas = new Canvas(mBitmap);
         canvas.drawRect(scaledX,scaledY,scaledX + blockWidth,scaledY + blockHeight,paint);
+    }
+
+    public void drawAllBlocks(ArrayList<Block> gameBoard){
+        clearSurface();
+        Canvas canvas = new Canvas(mBitmap);
+
+        for (Block block: gameBoard){
+            drawBlock(block.getX(),block.getY(),block.getColor(), canvas);
+        }
 
         postInvalidate();
     }
 
-    public void clearSurface(){
+    private void clearSurface(){
         mBitmap.eraseColor(Color.TRANSPARENT);
     }
-
 
 }

@@ -15,12 +15,12 @@ public class GameController implements Runnable{
     private int gameInterval = 300;
     private GameSurfaceView gameSurfaceView;
 
-    //private Block gameBoard[][] = new Block[panelWidth][panelHeight];
-    private ArrayList<Block> gameBoard = new ArrayList<>();
+    private ArrayList<Block> gameBoard;
     private Block actualBlock;
 
     GameController(GameSurfaceView gameSurfaceView){
         this.gameSurfaceView = gameSurfaceView;
+        gameBoard = new ArrayList<>();
     }
 
     public void moveLeft(){
@@ -74,11 +74,7 @@ public class GameController implements Runnable{
 
     private void repaint(){
         if (gameSurfaceView.isSurfaceReady()){
-            gameSurfaceView.clearSurface();
-
-            for (Block block: gameBoard){
-                gameSurfaceView.drawBlock(block.getX(),block.getY(),block.getColor());
-            }
+            gameSurfaceView.drawAllBlocks(gameBoard);
         }
     }
 
