@@ -1,9 +1,5 @@
 package pl.knowakowski.tetris;
 
-import android.graphics.Color;
-import android.graphics.Paint;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -27,18 +23,32 @@ public class GameController implements Runnable{
         this.gameSurfaceView = gameSurfaceView;
     }
 
-    public void leftClick(){
+    public void moveLeft(){
         actualBlock.setX(actualBlock.getX() - 1);
         repaint();
     }
 
-    public void rightClick(){
+    public void moveRight(){
         actualBlock.setX(actualBlock.getX() + 1);
         repaint();
     }
 
-    public void downClick(){
-        actualBlock.setY(actualBlock.getY() + 1);
+    public void moveDown(){
+        boolean canMoveDown = true;
+        for (Block block: gameBoard){
+            if((block.getY()) == (actualBlock.getY() + 1) && (block.getX()) == (actualBlock.getX())) {
+                actualBlock = createNewBlock();
+                canMoveDown = false;
+                break;
+            }
+        }
+
+        if(canMoveDown == true){
+            if(actualBlock.getY() != 20) //down of board
+                actualBlock.setY(actualBlock.getY() + 1);
+            else
+                actualBlock = createNewBlock();
+        }
         repaint();
     }
 
@@ -75,13 +85,10 @@ public class GameController implements Runnable{
     @Override
     public void run() {
         while(isGameRunning) {
-
-            repaint();
-
             if(actualBlock.getY() == 20){
                 actualBlock = createNewBlock();
             }else{
-                actualBlock.setY(actualBlock.getY() + 1);
+                moveDown();
             }
             try {
                 Thread.sleep(gameInterval);
