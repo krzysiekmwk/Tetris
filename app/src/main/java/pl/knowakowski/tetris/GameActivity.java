@@ -1,8 +1,6 @@
 package pl.knowakowski.tetris;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -39,21 +37,21 @@ public class GameActivity extends Activity{
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gameController.leftClick();
+                gameController.moveLeft();
             }
         });
 
         buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gameController.rightClick();
+                gameController.moveRight();
             }
         });
 
         buttonDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gameController.downClick();
+                gameController.moveDown();
             }
         });
 
