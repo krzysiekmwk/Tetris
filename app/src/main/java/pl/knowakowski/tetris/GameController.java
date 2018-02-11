@@ -39,41 +39,17 @@ public class GameController implements Runnable{
         }
 
         repaint();*/
+        actualBlock.moveLeft();
+        repaint();
     }
 
     public void moveRight(){
-        /*boolean canMoveRight = true;
-        for (Block block: gameBoard){
-            if((block.getX()) == (actualBlock.getX() + 1) && (block.getY()) == (actualBlock.getY())) {
-                canMoveRight = false;
-                break;
-            }
-        }
+        actualBlock.moveRight();
+        repaint();
 
-        if(canMoveRight){
-            if((actualBlock.getX() + 1) != 11)
-                actualBlock.setX(actualBlock.getX() + 1);
-        }
-
-        repaint();*/
     }
 
     public void moveDown(){
-        /*boolean canMoveDown = true;
-        for (Figure block: gameBoard){
-            if((block.getY()) == (actualBlock.getY() + 1) && (block.getX()) == (actualBlock.getX())) {
-                actualBlock = createNewBlock();
-                canMoveDown = false;
-                break;
-            }
-        }
-
-        if(canMoveDown){
-            if(actualBlock.getY() != 20) //down of board
-                actualBlock.setY(actualBlock.getY() + 1);
-            else
-                actualBlock = createNewBlock();
-        }*/
         actualBlock.moveDown();
         repaint();
     }
@@ -84,7 +60,6 @@ public class GameController implements Runnable{
     }
 
     public void start(){
-        //actualBlock = createNewBlock();
         createNewFigure();
         isGameRunning = true;
 
@@ -97,12 +72,7 @@ public class GameController implements Runnable{
     }
 
     private void createNewFigure(){
-        //Block block = new Block(5,1);
-        //IBlock block = new IBlock();
         actualBlock = new IBlock(gameBoard);
-        //gameBoard.add(block);
-
-        //return block;
     }
 
     private void repaint(){

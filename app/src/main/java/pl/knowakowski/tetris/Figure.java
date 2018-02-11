@@ -15,11 +15,42 @@ public abstract class Figure {
     protected boolean canMoveDown = true;
 
     public void moveRight(){
+        boolean canMoveRight = true;
+        for (Block block: blocksContainer) {
+            for (Block blockInGameBoard : gameBoard) {
+                if ((blockInGameBoard.getX()) == (block.getX() + 1) && (blockInGameBoard.getY()) == (block.getY())) {
+                    canMoveRight = false;
+                }
+            }
+            if((block.getX() + 1) == 11)
+                canMoveRight = false;
+        }
 
+        if(canMoveRight){
+            for (Block block: blocksContainer) {
+                block.setX(block.getX() + 1);
+            }
+        }
     }
 
     public void moveLeft(){
+        boolean canMoveLeft = true;
+        for (Block block: blocksContainer){
+            for (Block blockInGameBoard: gameBoard){
+                if((blockInGameBoard.getX()) == (block.getX() - 1) && (blockInGameBoard.getY()) == (block.getY())) {
+                    canMoveLeft = false;
+                }
+            }
 
+            if((block.getX() - 1) == 0)
+                canMoveLeft = false;
+        }
+
+        if(canMoveLeft){
+            for (Block block: blocksContainer) {
+                block.setX(block.getX() - 1);
+            }
+        }
     }
 
     public void moveDown(){
@@ -46,7 +77,7 @@ public abstract class Figure {
     }
 
     public void moveRotate(){
-
+        //RESORT NEEDED
     }
 
     public ArrayList<Block> getBlocksToDraw(){
