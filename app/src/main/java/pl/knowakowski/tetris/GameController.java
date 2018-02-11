@@ -1,5 +1,8 @@
 package pl.knowakowski.tetris;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+
 import java.util.ArrayList;
 
 /**
@@ -7,14 +10,14 @@ import java.util.ArrayList;
  */
 
 public class GameController implements Runnable{
-    
+
     private Thread gameThread = null;
     private boolean isGameRunning = false;
     private int gameInterval = 300;
     private GameSurfaceView gameSurfaceView;
 
     private ArrayList<Block> gameBoard;
-    private Block actualBlock;
+    private Figure actualBlock;
 
     GameController(GameSurfaceView gameSurfaceView){
         this.gameSurfaceView = gameSurfaceView;
@@ -22,7 +25,7 @@ public class GameController implements Runnable{
     }
 
     public void moveLeft(){
-        boolean canMoveLeft = true;
+        /*boolean canMoveLeft = true;
         for (Block block: gameBoard){
             if((block.getX()) == (actualBlock.getX() - 1) && (block.getY()) == (actualBlock.getY())) {
                 canMoveLeft = false;
@@ -35,11 +38,11 @@ public class GameController implements Runnable{
                 actualBlock.setX(actualBlock.getX() - 1);
         }
 
-        repaint();
+        repaint();*/
     }
 
     public void moveRight(){
-        boolean canMoveRight = true;
+        /*boolean canMoveRight = true;
         for (Block block: gameBoard){
             if((block.getX()) == (actualBlock.getX() + 1) && (block.getY()) == (actualBlock.getY())) {
                 canMoveRight = false;
@@ -52,12 +55,12 @@ public class GameController implements Runnable{
                 actualBlock.setX(actualBlock.getX() + 1);
         }
 
-        repaint();
+        repaint();*/
     }
 
     public void moveDown(){
-        boolean canMoveDown = true;
-        for (Block block: gameBoard){
+        /*boolean canMoveDown = true;
+        for (Figure block: gameBoard){
             if((block.getY()) == (actualBlock.getY() + 1) && (block.getX()) == (actualBlock.getX())) {
                 actualBlock = createNewBlock();
                 canMoveDown = false;
@@ -70,7 +73,8 @@ public class GameController implements Runnable{
                 actualBlock.setY(actualBlock.getY() + 1);
             else
                 actualBlock = createNewBlock();
-        }
+        }*/
+        actualBlock.moveDown();
         repaint();
     }
 
@@ -80,34 +84,49 @@ public class GameController implements Runnable{
     }
 
     public void start(){
-        actualBlock = createNewBlock();
+        //actualBlock = createNewBlock();
+        createNewFigure();
         isGameRunning = true;
 
         gameThread = new Thread(this);
         gameThread.start();
+
+        Paint paint = new Paint();
+        paint.setARGB(255,255,0,0);
+        gameBoard.add(new Block(5,15,paint));
     }
 
-    private Block createNewBlock(){
-        Block block = new Block(5,1);
-        gameBoard.add(block);
+    private void createNewFigure(){
+        //Block block = new Block(5,1);
+        //IBlock block = new IBlock();
+        actualBlock = new IBlock(gameBoard);
+        //gameBoard.add(block);
 
-        return block;
+        //return block;
     }
 
     private void repaint(){
         if (gameSurfaceView.isSurfaceReady()){
+            gameSurfaceView.clearSurface();
+            gameSurfaceView.drawFigure(actualBlock);
             gameSurfaceView.drawAllBlocks(gameBoard);
+            gameSurfaceView.showSurface();
         }
     }
 
     @Override
     public void run() {
         while(isGameRunning) {
-            if(actualBlock.getY() == 20){
-                actualBlock = createNewBlock();
+            if(actualBlock.canMoveDown()){
+                moveDown();
+            }else {
+                createNewFigure();
+            }
+            /*if(actualBlock.getY() == 20){
+                createNewFigure();
             }else{
                 moveDown();
-            }
+            }*/
             try {
                 Thread.sleep(gameInterval);
             } catch (InterruptedException e) {

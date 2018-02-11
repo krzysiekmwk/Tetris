@@ -1,26 +1,30 @@
 package pl.knowakowski.tetris;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.NonNull;
 
+import java.util.Comparator;
 import java.util.Random;
 
 /**
  * Created by krzysiek on 05.02.2018.
  */
 
-public class Block {
+public class Block implements Comparable<Block> {
     private int x;
     private int y;
     private Paint color;
     private Random random;
 
-    Block(int x, int y){
+    Block(int x, int y, Paint color){
         this.x = x;
         this.y = y;
+        this.color = color;
         random = new Random();
-        color = new Paint();
-        color.setARGB(255, random.nextInt(255),random.nextInt(255),random.nextInt(255));
+        //color = new Paint();
+        //color.setARGB(255, random.nextInt(255),random.nextInt(255),random.nextInt(255));
 
     }
 
@@ -42,5 +46,19 @@ public class Block {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "X: " + x + ", Y: " + y;
+    }
+
+    @Override
+    public int compareTo(@NonNull Block block) {
+        if(y > block.y)
+            return -1;
+        if(y < block.y)
+            return 1;
+        return 0;
     }
 }

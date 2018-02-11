@@ -74,18 +74,31 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     public void drawAllBlocks(ArrayList<Block> gameBoard){
-        clearSurface();
+        //clearSurface();
         Canvas canvas = new Canvas(mBitmap);
 
         for (Block block: gameBoard){
             drawBlock(block.getX(),block.getY(),block.getColor(), canvas);
         }
 
-        postInvalidate();
+        //postInvalidate();
     }
 
-    private void clearSurface(){
+
+
+    public void clearSurface(){
         mBitmap.eraseColor(Color.TRANSPARENT);
     }
 
+    public void showSurface(){postInvalidate();}
+
+
+    public void drawFigure(Figure actualBlock) {
+        Canvas canvas = new Canvas(mBitmap);
+
+        for (Block block: actualBlock.getBlocksToDraw()){
+            drawBlock(block.getX(),block.getY(),block.getColor(), canvas);
+        }
+
+    }
 }
