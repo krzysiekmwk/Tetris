@@ -30,48 +30,4 @@ public class IBlock extends Figure{
 
         Collections.sort(blocksContainer);
     }
-
-    @Override
-    public void moveRight() {
-
-    }
-
-    @Override
-    public void moveLeft() {
-
-    }
-
-    @Override
-    public void moveDown() {
-        for (Block block: blocksContainer){
-            canMoveDown = true;
-            for (Block blockInGameBoard: gameBoard){
-                if((blockInGameBoard.getY()) == (block.getY() + 1) && (blockInGameBoard.getX()) == (block.getX())) {
-                    canMoveDown = false;
-                    gameBoard.addAll(blocksContainer);
-                    return;
-                }
-            }
-
-            if(canMoveDown){
-                if(block.getY() != 20) //down of board
-                    block.setY(block.getY() + 1);
-                else{
-                    canMoveDown = false;
-                    gameBoard.addAll(blocksContainer);
-                    return;
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean canMoveDown() {
-        return canMoveDown;
-    }
-
-    @Override
-    public void moveRotate() {
-
-    }
 }

@@ -14,15 +14,46 @@ public abstract class Figure {
     protected ArrayList<Block> blocksContainer;
     protected boolean canMoveDown = true;
 
-    abstract public void moveRight();
-    abstract public void moveLeft();
+    public void moveRight(){
 
-    abstract public void moveDown();
+    }
 
-    abstract public void moveRotate();
+    public void moveLeft(){
+
+    }
+
+    public void moveDown(){
+        for (Block block: blocksContainer){
+            canMoveDown = true;
+            for (Block blockInGameBoard: gameBoard){
+                if((blockInGameBoard.getY()) == (block.getY() + 1) && (blockInGameBoard.getX()) == (block.getX())) {
+                    canMoveDown = false;
+                    gameBoard.addAll(blocksContainer);
+                    return;
+                }
+            }
+
+            if(canMoveDown){
+                if(block.getY() != 20) //down of board
+                    block.setY(block.getY() + 1);
+                else{
+                    canMoveDown = false;
+                    gameBoard.addAll(blocksContainer);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void moveRotate(){
+
+    }
 
     public ArrayList<Block> getBlocksToDraw(){
             return blocksContainer;
     }
-    abstract public boolean canMoveDown();
+
+    public boolean canMoveDown(){
+        return canMoveDown;
+    }
 }
