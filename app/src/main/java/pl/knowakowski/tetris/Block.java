@@ -1,12 +1,7 @@
 package pl.knowakowski.tetris;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-
-import java.util.Comparator;
-import java.util.Random;
 
 /**
  * Created by krzysiek on 05.02.2018.
@@ -55,5 +50,24 @@ public class Block implements Comparable<Block> {
         if(y < block.y)
             return 1;
         return 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 28;
+        hash = hash*31 + x;
+        hash = hash*31 + y;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this)
+            return true;
+        if(!(o instanceof Block))
+            return false;
+        Block block = (Block)o;
+
+        return (block.x == x) && (block.y == y);
     }
 }

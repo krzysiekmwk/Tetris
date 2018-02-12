@@ -1,11 +1,8 @@
 package pl.knowakowski.tetris;
 
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -14,7 +11,7 @@ import java.util.Collections;
 
 public class SBlock extends Figure {
 
-    SBlock(ArrayList<Block> gameBoard){
+    SBlock(ArraySet<Block> gameBoard){
         this.gameBoard = gameBoard;
         blocksContainer = new ArrayList<>();
 

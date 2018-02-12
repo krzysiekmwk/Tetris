@@ -9,8 +9,6 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
-
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
     private Bitmap mBitmap;
@@ -73,7 +71,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         canvas.drawRect(scaledX,scaledY,scaledX + blockWidth,scaledY + blockHeight,paint);
     }
 
-    public void drawAllBlocks(ArrayList<Block> gameBoard){
+    public void drawAllBlocks(ArraySet<Block> gameBoard){
         Canvas canvas = new Canvas(mBitmap);
 
         for (Block block: gameBoard){

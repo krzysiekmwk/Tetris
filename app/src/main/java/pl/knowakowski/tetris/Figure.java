@@ -1,7 +1,5 @@
 package pl.knowakowski.tetris;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 /**
@@ -9,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public abstract class Figure {
-    protected ArrayList<Block> gameBoard;
+    protected ArraySet<Block> gameBoard;
     protected ArrayList<Block> blocksContainer;
     protected boolean canMoveDown = true;
     protected Block rotationPoint;
