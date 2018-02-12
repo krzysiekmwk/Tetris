@@ -54,17 +54,30 @@ public abstract class Figure {
     }
 
     public void moveDown(){
-        for (Block block: blocksContainer){
-            canMoveDown = true;
-            for (Block blockInGameBoard: gameBoard){
-                if((blockInGameBoard.getY()) == (block.getY() + 1) && (blockInGameBoard.getX()) == (block.getX())) {
+        canMoveDown = true;
+        for (Block block: blocksContainer) {
+            for (Block blockInGameBoard : gameBoard) {
+                if ((blockInGameBoard.getY()) == (block.getY() + 1) && (blockInGameBoard.getX()) == (block.getX())) {
+                    canMoveDown = false;
+                    gameBoard.addAll(blocksContainer);
+                    return;
+                }
+
+                if (block.getY() == 20) { //down of board
                     canMoveDown = false;
                     gameBoard.addAll(blocksContainer);
                     return;
                 }
             }
+        }
 
-            if(canMoveDown){
+        if(canMoveDown){
+            for (Block block: blocksContainer) {
+                block.setY(block.getY() + 1);
+            }
+        }
+
+            /*if(canMoveDown){
                 if(block.getY() != 20) //down of board
                     block.setY(block.getY() + 1);
                 else{
@@ -72,8 +85,8 @@ public abstract class Figure {
                     gameBoard.addAll(blocksContainer);
                     return;
                 }
-            }
-        }
+            }*/
+        //}
     }
 
     public void moveRotate(){
