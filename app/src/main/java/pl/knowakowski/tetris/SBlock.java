@@ -1,8 +1,11 @@
 package pl.knowakowski.tetris;
 
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -10,8 +13,6 @@ import java.util.Collections;
  */
 
 public class SBlock extends Figure {
-
-    private int position = 0;
 
     SBlock(ArrayList<Block> gameBoard){
         this.gameBoard = gameBoard;
@@ -25,17 +26,9 @@ public class SBlock extends Figure {
         blocksContainer.add(new Block(5,5,color));
         blocksContainer.add(new Block(6,5,color));
 
+        rotationPoint = blocksContainer.get(2);
+
         Collections.sort(blocksContainer);
     }
 
-    @Override
-    public void moveRotate() {
-        if(position == 0) {
-            int x = blocksContainer.get(2).getX();
-            int y = blocksContainer.get(2).getY();
-
-
-        }
-
-    }
 }

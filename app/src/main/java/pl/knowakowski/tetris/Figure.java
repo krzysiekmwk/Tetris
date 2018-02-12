@@ -1,5 +1,7 @@
 package pl.knowakowski.tetris;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -10,6 +12,7 @@ public abstract class Figure {
     protected ArrayList<Block> gameBoard;
     protected ArrayList<Block> blocksContainer;
     protected boolean canMoveDown = true;
+    protected Block rotationPoint;
 
     public void moveRight(){
         boolean canMoveRight = true;
@@ -59,12 +62,12 @@ public abstract class Figure {
                     gameBoard.addAll(blocksContainer);
                     return;
                 }
+            }
 
-                if (block.getY() == 20) { //down of board
-                    canMoveDown = false;
-                    gameBoard.addAll(blocksContainer);
-                    return;
-                }
+            if (block.getY() == 20) { //down of board
+                canMoveDown = false;
+                gameBoard.addAll(blocksContainer);
+                return;
             }
         }
 
@@ -76,7 +79,63 @@ public abstract class Figure {
     }
 
     public void moveRotate(){
-        //RESORT NEEDED
+        int pivotX = rotationPoint.getX();
+        int pivotY = rotationPoint.getY();
+
+        ArrayList<Block> tmp = new ArrayList<>();
+
+        //Make actual copy
+        for (Block block: blocksContainer) {
+            tmp.add(new Block(block.getX(),block.getY(),block.getColor()));
+        }
+
+
+        /*
+            Algorithm for rotate figure
+            There i'm using matrix
+            R [0 -1] - for Rotation. This is matrix for -90 rotation.
+              [1  0]
+            pivot - is a point what we will rotate a Figure
+            a,b - is a simple calculation for length of vector from pivot point
+            vx, vy - is counted rotated vector
+            pivotX + vx - new X point
+
+            It's only simpler version than this:
+            x1 = (x-pivotX)*cos(-90) - (y-pivotY)*sin(-90) + pivotX;
+            y1 = (x-pivotX)*sin(-90) + (y-pivotY)*cos(-90) + pivotY;
+         */
+
+        boolean canRotate = true;
+        //Rotate tmp object and check if everything is correct
+        for (Block block: blocksContainer) {
+            if(block != rotationPoint){
+                int a = block.getX() - pivotX;
+                int b = block.getY() - pivotY;
+
+                int vx = -1*b;
+                int vy = a;
+
+                block.setX(pivotX + vx);
+                block.setY(pivotY + vy);
+
+                for (Block blockInGameBoard : gameBoard) {
+                    if (((blockInGameBoard.getX()) == (block.getX())) && ((blockInGameBoard.getY()) == (block.getY()))
+                            || (block.getX() <= 0) || (block.getX() >= 11)) {
+                        canRotate = false;
+                    }
+                }
+            }
+        }
+
+        //Back to previous version
+        if(!canRotate){
+            int i = 0;
+            for (Block block: blocksContainer) {
+                block.setX(tmp.get(i).getX());
+                block.setY(tmp.get(i).getY());
+                i++;
+            }
+        }
     }
 
     public ArrayList<Block> getBlocksToDraw(){
