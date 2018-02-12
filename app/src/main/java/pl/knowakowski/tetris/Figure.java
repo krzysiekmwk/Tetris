@@ -13,40 +13,44 @@ public abstract class Figure {
     protected Block rotationPoint;
 
     public void moveRight(){
-        boolean canMoveRight = true;
-        for (Block block: blocksContainer) {
-            for (Block blockInGameBoard : gameBoard) {
-                if ((blockInGameBoard.getX()) == (block.getX() + 1) && (blockInGameBoard.getY()) == (block.getY())) {
-                    canMoveRight = false;
+        if(canMoveDown) {
+            boolean canMoveRight = true;
+            for (Block block : blocksContainer) {
+                for (Block blockInGameBoard : gameBoard) {
+                    if ((blockInGameBoard.getX()) == (block.getX() + 1) && (blockInGameBoard.getY()) == (block.getY())) {
+                        canMoveRight = false;
+                    }
                 }
+                if ((block.getX() + 1) == 11)
+                    canMoveRight = false;
             }
-            if((block.getX() + 1) == 11)
-                canMoveRight = false;
-        }
 
-        if(canMoveRight){
-            for (Block block: blocksContainer) {
-                block.setX(block.getX() + 1);
+            if (canMoveRight) {
+                for (Block block : blocksContainer) {
+                    block.setX(block.getX() + 1);
+                }
             }
         }
     }
 
     public void moveLeft(){
-        boolean canMoveLeft = true;
-        for (Block block: blocksContainer){
-            for (Block blockInGameBoard: gameBoard){
-                if((blockInGameBoard.getX()) == (block.getX() - 1) && (blockInGameBoard.getY()) == (block.getY())) {
-                    canMoveLeft = false;
+        if(canMoveDown) {
+            boolean canMoveLeft = true;
+            for (Block block : blocksContainer) {
+                for (Block blockInGameBoard : gameBoard) {
+                    if ((blockInGameBoard.getX()) == (block.getX() - 1) && (blockInGameBoard.getY()) == (block.getY())) {
+                        canMoveLeft = false;
+                    }
                 }
+
+                if ((block.getX() - 1) == 0)
+                    canMoveLeft = false;
             }
 
-            if((block.getX() - 1) == 0)
-                canMoveLeft = false;
-        }
-
-        if(canMoveLeft){
-            for (Block block: blocksContainer) {
-                block.setX(block.getX() - 1);
+            if (canMoveLeft) {
+                for (Block block : blocksContainer) {
+                    block.setX(block.getX() - 1);
+                }
             }
         }
     }
@@ -76,6 +80,20 @@ public abstract class Figure {
         }
     }
 
+    /*
+        Algorithm for rotate figure
+        There i'm using matrix
+        R [0 -1] - for Rotation. This is matrix for -90 rotation.
+          [1  0]
+        pivot - is a point what we will rotate a Figure
+        a,b - is a simple calculation for length of vector from pivot point
+        vx, vy - is counted rotated vector
+        pivotX + vx - new X point
+
+        It's only simpler version than this:
+        x1 = (x-pivotX)*cos(-90) - (y-pivotY)*sin(-90) + pivotX;
+        y1 = (x-pivotX)*sin(-90) + (y-pivotY)*cos(-90) + pivotY;
+    */
     public void moveRotate(){
         int pivotX = rotationPoint.getX();
         int pivotY = rotationPoint.getY();
@@ -86,22 +104,6 @@ public abstract class Figure {
         for (Block block: blocksContainer) {
             tmp.add(new Block(block.getX(),block.getY(),block.getColor()));
         }
-
-
-        /*
-            Algorithm for rotate figure
-            There i'm using matrix
-            R [0 -1] - for Rotation. This is matrix for -90 rotation.
-              [1  0]
-            pivot - is a point what we will rotate a Figure
-            a,b - is a simple calculation for length of vector from pivot point
-            vx, vy - is counted rotated vector
-            pivotX + vx - new X point
-
-            It's only simpler version than this:
-            x1 = (x-pivotX)*cos(-90) - (y-pivotY)*sin(-90) + pivotX;
-            y1 = (x-pivotX)*sin(-90) + (y-pivotY)*cos(-90) + pivotY;
-         */
 
         boolean canRotate = true;
         //Rotate tmp object and check if everything is correct
