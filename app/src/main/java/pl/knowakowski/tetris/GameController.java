@@ -41,7 +41,7 @@ public class GameController implements Runnable{
     }
 
     public void rotateClick(){
-
+        actualBlock.moveRotate();
         repaint();
     }
 
@@ -54,12 +54,12 @@ public class GameController implements Runnable{
 
         Paint paint = new Paint();
         paint.setARGB(255,255,0,0);
-        gameBoard.add(new Block(5,15,paint));
+        //gameBoard.add(new Block(5,15,paint));
     }
 
     private void createNewFigure(){
-        //actualBlock = new IBlock(gameBoard);
-        actualBlock = new SBlock(gameBoard);
+        actualBlock = new IBlock(gameBoard);
+        //actualBlock = new SBlock(gameBoard);
     }
 
     private void repaint(){

@@ -11,6 +11,8 @@ import java.util.Collections;
 
 public class SBlock extends Figure {
 
+    private int position = 0;
+
     SBlock(ArrayList<Block> gameBoard){
         this.gameBoard = gameBoard;
         blocksContainer = new ArrayList<>();
@@ -24,5 +26,16 @@ public class SBlock extends Figure {
         blocksContainer.add(new Block(6,5,color));
 
         Collections.sort(blocksContainer);
+    }
+
+    @Override
+    public void moveRotate() {
+        if(position == 0) {
+            int x = blocksContainer.get(2).getX();
+            int y = blocksContainer.get(2).getY();
+
+
+        }
+
     }
 }
