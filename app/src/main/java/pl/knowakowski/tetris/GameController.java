@@ -25,20 +25,6 @@ public class GameController implements Runnable{
     }
 
     public void moveLeft(){
-        /*boolean canMoveLeft = true;
-        for (Block block: gameBoard){
-            if((block.getX()) == (actualBlock.getX() - 1) && (block.getY()) == (actualBlock.getY())) {
-                canMoveLeft = false;
-                break;
-            }
-        }
-
-        if(canMoveLeft){
-            if((actualBlock.getX() - 1) != 0)
-                actualBlock.setX(actualBlock.getX() - 1);
-        }
-
-        repaint();*/
         actualBlock.moveLeft();
         repaint();
     }
@@ -72,7 +58,8 @@ public class GameController implements Runnable{
     }
 
     private void createNewFigure(){
-        actualBlock = new IBlock(gameBoard);
+        //actualBlock = new IBlock(gameBoard);
+        actualBlock = new SBlock(gameBoard);
     }
 
     private void repaint(){
@@ -90,13 +77,9 @@ public class GameController implements Runnable{
             if(actualBlock.canMoveDown()){
                 moveDown();
             }else {
+                //Check if can remove row
                 createNewFigure();
             }
-            /*if(actualBlock.getY() == 20){
-                createNewFigure();
-            }else{
-                moveDown();
-            }*/
             try {
                 Thread.sleep(gameInterval);
             } catch (InterruptedException e) {

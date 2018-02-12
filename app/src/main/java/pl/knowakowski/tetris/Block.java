@@ -16,16 +16,11 @@ public class Block implements Comparable<Block> {
     private int x;
     private int y;
     private Paint color;
-    private Random random;
 
     Block(int x, int y, Paint color){
         this.x = x;
         this.y = y;
         this.color = color;
-        random = new Random();
-        //color = new Paint();
-        //color.setARGB(255, random.nextInt(255),random.nextInt(255),random.nextInt(255));
-
     }
 
     public Paint getColor() {

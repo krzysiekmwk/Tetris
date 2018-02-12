@@ -1,8 +1,5 @@
 package pl.knowakowski.tetris;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-
 import java.util.ArrayList;
 
 /**
@@ -76,17 +73,6 @@ public abstract class Figure {
                 block.setY(block.getY() + 1);
             }
         }
-
-            /*if(canMoveDown){
-                if(block.getY() != 20) //down of board
-                    block.setY(block.getY() + 1);
-                else{
-                    canMoveDown = false;
-                    gameBoard.addAll(blocksContainer);
-                    return;
-                }
-            }*/
-        //}
     }
 
     public void moveRotate(){
