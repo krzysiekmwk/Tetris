@@ -1,6 +1,10 @@
 package pl.knowakowski.tetris;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Paint;
+import android.view.SurfaceHolder;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +22,10 @@ public class GameController implements Runnable{
     private Thread gameThread = null;
     private boolean isGameRunning = false;
     private int gameInterval = 300;
+
     private GameSurfaceView gameSurfaceView;
+    private Callback callback;
+    private int scorePoints;
 
     private ArraySet<Block> gameBoard;
     private Figure actualFigure;
@@ -26,8 +33,9 @@ public class GameController implements Runnable{
 
     private Random random;
 
-    GameController(GameSurfaceView gameSurfaceView){
+    GameController(GameSurfaceView gameSurfaceView, Callback callback){
         this.gameSurfaceView = gameSurfaceView;
+        this.callback = callback;
         gameBoard = new ArraySet<>();
         random = new Random();
     }
@@ -54,8 +62,12 @@ public class GameController implements Runnable{
     }
 
     public void start(){
+        showScorePoints();
+
         randomNewFigure();
         createNewFigure();
+        randomNewFigure(); //TODO show randomFigure
+
         isGameRunning = true;
 
         Paint paint = new Paint();
@@ -185,6 +197,10 @@ public class GameController implements Runnable{
         return numberOfRemovedRows.size();
     }
 
+    private void showScorePoints(){
+        callback.updateTextView(scorePoints + "");
+    }
+
     @Override
     public void run() {
         while(isGameRunning) {
@@ -192,9 +208,12 @@ public class GameController implements Runnable{
                 moveDown();
             }else {
 
-                removeFullRows();
+                scorePoints += removeFullRows();
                 createNewFigure();
                 randomNewFigure();
+
+                //TODO show random Figure
+                showScorePoints();
 
             }
             try {

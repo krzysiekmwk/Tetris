@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class GameActivity extends Activity{
+public class GameActivity extends Activity implements Callback {
 
     private GameSurfaceView gameSurfaceView;
 
@@ -31,7 +32,7 @@ public class GameActivity extends Activity{
         buttonDown = findViewById(R.id.button_down);
         buttonRotate = findViewById(R.id.button_rotate);
 
-        gameController = new GameController(gameSurfaceView);
+        gameController = new GameController(gameSurfaceView, this);
         gameController.start();
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +63,16 @@ public class GameActivity extends Activity{
             }
         });
 
+    }
 
+    @Override
+    public void updateTextView(final String str) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                TextView scorePointsTextView = findViewById(R.id.textView_scorePoints);
+                scorePointsTextView.setText(str);
+            }
+        });
     }
 }
