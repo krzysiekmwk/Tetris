@@ -18,7 +18,7 @@ public class LBlock extends Figure{
         blocksContainer = new ArrayList<>();
 
         Paint color = new Paint();
-        color.setARGB(255,0,255,0);//Green
+        color.setARGB(255,255,102,0);//Orange
 
         blocksContainer.add(new Block(6,4,color));
         blocksContainer.add(new Block(4,5,color));

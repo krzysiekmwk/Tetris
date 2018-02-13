@@ -18,7 +18,7 @@ public class IBlock extends Figure{
         blocksContainer = new ArrayList<>();
 
         Paint color = new Paint();
-        color.setARGB(255, 255,255,0);//Yellow
+        color.setARGB(255, 0,255,255);//Light Blue
 
         blocksContainer.add(new Block(5,4,color));
         blocksContainer.add(new Block(5,5,color));

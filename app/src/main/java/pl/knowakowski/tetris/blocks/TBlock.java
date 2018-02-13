@@ -18,7 +18,7 @@ public class TBlock extends Figure {
         blocksContainer = new ArrayList<>();
 
         Paint color = new Paint();
-        color.setARGB(255,0,255,0);//Green
+        color.setARGB(255,204,0,153);//Purple
 
         blocksContainer.add(new Block(5,4,color));
         blocksContainer.add(new Block(4,5,color));
