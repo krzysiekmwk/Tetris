@@ -22,7 +22,7 @@ public class GameController implements Runnable{
 
     private ArraySet<Block> gameBoard;
     private Figure actualFigure;
-    private Figure nextBlock;
+    private Figure nextFigure;
 
     private Random random;
 
@@ -54,6 +54,7 @@ public class GameController implements Runnable{
     }
 
     public void start(){
+        randomNewFigure();
         createNewFigure();
         isGameRunning = true;
 
@@ -105,7 +106,7 @@ public class GameController implements Runnable{
 
     }
 
-    private void createNewFigure(){
+    private void randomNewFigure(){
         /*
             0 - 4    - IBlock - 5%
             5 - 19   - JBlock - 15%
@@ -118,20 +119,24 @@ public class GameController implements Runnable{
         int randomValue = random.nextInt(100);
 
         if(randomValue >= 0 && randomValue <= 4)
-            actualFigure = new IBlock(gameBoard);
+            nextFigure = new IBlock(gameBoard);
         if(randomValue >= 5 && randomValue <= 19)
-            actualFigure = new JBlock(gameBoard);
+            nextFigure = new JBlock(gameBoard);
         if(randomValue >= 20 && randomValue <= 34)
-            actualFigure = new LBlock(gameBoard);
+            nextFigure = new LBlock(gameBoard);
         if(randomValue >= 35 && randomValue <= 39)
-            actualFigure = new OBlock(gameBoard);
+            nextFigure = new OBlock(gameBoard);
         if(randomValue >= 40 && randomValue <= 59)
-            actualFigure = new SBlock(gameBoard);
+            nextFigure = new SBlock(gameBoard);
         if(randomValue >= 60 && randomValue <= 84)
-            actualFigure = new ZBlock(gameBoard);
+            nextFigure = new ZBlock(gameBoard);
         if(randomValue >= 85 && randomValue <= 99)
-            actualFigure = new TBlock(gameBoard);
+            nextFigure = new TBlock(gameBoard);
 
+    }
+
+    private void createNewFigure(){
+        actualFigure = nextFigure;
     }
 
     private void repaint(){
@@ -189,6 +194,7 @@ public class GameController implements Runnable{
 
                 removeFullRows();
                 createNewFigure();
+                randomNewFigure();
 
             }
             try {
