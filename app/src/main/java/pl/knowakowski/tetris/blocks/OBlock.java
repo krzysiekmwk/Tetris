@@ -18,7 +18,7 @@ public class OBlock extends Figure {
         blocksContainer = new ArrayList<>();
 
         Paint color = new Paint();
-        color.setARGB(255,255,0,255);//Yellow
+        color.setARGB(255,255,255,0);//Yellow
 
         blocksContainer.add(new Block(4,4,color));
         blocksContainer.add(new Block(5,4,color));
