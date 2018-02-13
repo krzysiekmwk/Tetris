@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 
 import pl.knowakowski.tetris.blocks.*;
 
@@ -23,9 +24,12 @@ public class GameController implements Runnable{
     private Figure actualFigure;
     private Figure nextBlock;
 
+    private Random random;
+
     GameController(GameSurfaceView gameSurfaceView){
         this.gameSurfaceView = gameSurfaceView;
         gameBoard = new ArraySet<>();
+        random = new Random();
     }
 
     public void moveLeft(){
@@ -102,14 +106,32 @@ public class GameController implements Runnable{
     }
 
     private void createNewFigure(){
-        //actualFigure = new IBlock(gameBoard);
-        //actualFigure = new JBlock(gameBoard);
-        //actualFigure = new LBlock(gameBoard);
-        //actualFigure = new OBlock(gameBoard);
-        //actualFigure = new SBlock(gameBoard);
-        actualFigure = new TBlock(gameBoard);
-        //actualFigure = new ZBlock(gameBoard);
-        //actualFigure = new SBlock(gameBoard);
+        /*
+            0 - 4    - IBlock - 5%
+            5 - 19   - JBlock - 15%
+            20 - 34  - LBlock - 15%
+            35 - 39  - OBlock - 5%
+            40 - 59  - SBlock - 20%
+            60 - 84  - ZBlock - 25%
+            85 - 99  - TBlock - 15%
+         */
+        int randomValue = random.nextInt(100);
+
+        if(randomValue >= 0 && randomValue <= 4)
+            actualFigure = new IBlock(gameBoard);
+        if(randomValue >= 5 && randomValue <= 19)
+            actualFigure = new JBlock(gameBoard);
+        if(randomValue >= 20 && randomValue <= 34)
+            actualFigure = new LBlock(gameBoard);
+        if(randomValue >= 35 && randomValue <= 39)
+            actualFigure = new OBlock(gameBoard);
+        if(randomValue >= 40 && randomValue <= 59)
+            actualFigure = new SBlock(gameBoard);
+        if(randomValue >= 60 && randomValue <= 84)
+            actualFigure = new ZBlock(gameBoard);
+        if(randomValue >= 85 && randomValue <= 99)
+            actualFigure = new TBlock(gameBoard);
+
     }
 
     private void repaint(){
