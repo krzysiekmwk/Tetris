@@ -99,7 +99,13 @@ public class GameController implements Runnable{
     }
 
     private void createNewFigure(){
-        actualBlock = new IBlock(gameBoard);
+        //actualBlock = new IBlock(gameBoard);
+        //actualBlock = new JBlock(gameBoard);
+        //actualBlock = new LBlock(gameBoard);
+        //actualBlock = new OBlock(gameBoard);
+        //actualBlock = new SBlock(gameBoard);
+        actualBlock = new TBlock(gameBoard);
+        //actualBlock = new ZBlock(gameBoard);
         //actualBlock = new SBlock(gameBoard);
     }
 
