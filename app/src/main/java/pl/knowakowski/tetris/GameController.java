@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import pl.knowakowski.tetris.blocks.*;
+
 /**
  * Created by krzysiek on 05.02.2018.
  */

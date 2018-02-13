@@ -9,6 +9,9 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import pl.knowakowski.tetris.blocks.Block;
+import pl.knowakowski.tetris.blocks.Figure;
+
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
     private Bitmap mBitmap;

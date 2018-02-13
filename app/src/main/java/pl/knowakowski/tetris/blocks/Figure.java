@@ -1,6 +1,8 @@
-package pl.knowakowski.tetris;
+package pl.knowakowski.tetris.blocks;
 
 import java.util.ArrayList;
+
+import pl.knowakowski.tetris.ArraySet;
 
 /**
  * Created by krzysiek on 10.02.2018.

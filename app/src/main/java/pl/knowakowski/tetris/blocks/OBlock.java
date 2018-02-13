@@ -1,9 +1,11 @@
-package pl.knowakowski.tetris;
+package pl.knowakowski.tetris.blocks;
 
 import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import pl.knowakowski.tetris.ArraySet;
 
 /**
  * Created by krzysiek on 13.02.2018.
@@ -11,7 +13,7 @@ import java.util.Collections;
 
 public class OBlock extends Figure {
 
-    OBlock(ArraySet<Block> gameBoard){
+    public OBlock(ArraySet<Block> gameBoard){
         this.gameBoard = gameBoard;
         blocksContainer = new ArrayList<>();
 

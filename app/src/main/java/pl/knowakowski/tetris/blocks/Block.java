@@ -1,4 +1,4 @@
-package pl.knowakowski.tetris;
+package pl.knowakowski.tetris.blocks;
 
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
