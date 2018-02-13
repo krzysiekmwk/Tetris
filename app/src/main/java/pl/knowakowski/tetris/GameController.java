@@ -19,8 +19,9 @@ public class GameController implements Runnable{
     private int gameInterval = 300;
     private GameSurfaceView gameSurfaceView;
 
-    ArraySet<Block> gameBoard;
-    private Figure actualBlock;
+    private ArraySet<Block> gameBoard;
+    private Figure actualFigure;
+    private Figure nextBlock;
 
     GameController(GameSurfaceView gameSurfaceView){
         this.gameSurfaceView = gameSurfaceView;
@@ -28,23 +29,23 @@ public class GameController implements Runnable{
     }
 
     public void moveLeft(){
-        actualBlock.moveLeft();
+        actualFigure.moveLeft();
         repaint();
     }
 
     public void moveRight(){
-        actualBlock.moveRight();
+        actualFigure.moveRight();
         repaint();
 
     }
 
     public void moveDown(){
-        actualBlock.moveDown();
+        actualFigure.moveDown();
         repaint();
     }
 
     public void rotateClick(){
-        actualBlock.moveRotate();
+        actualFigure.moveRotate();
         repaint();
     }
 
@@ -101,27 +102,27 @@ public class GameController implements Runnable{
     }
 
     private void createNewFigure(){
-        //actualBlock = new IBlock(gameBoard);
-        //actualBlock = new JBlock(gameBoard);
-        //actualBlock = new LBlock(gameBoard);
-        //actualBlock = new OBlock(gameBoard);
-        //actualBlock = new SBlock(gameBoard);
-        actualBlock = new TBlock(gameBoard);
-        //actualBlock = new ZBlock(gameBoard);
-        //actualBlock = new SBlock(gameBoard);
+        //actualFigure = new IBlock(gameBoard);
+        //actualFigure = new JBlock(gameBoard);
+        //actualFigure = new LBlock(gameBoard);
+        //actualFigure = new OBlock(gameBoard);
+        //actualFigure = new SBlock(gameBoard);
+        actualFigure = new TBlock(gameBoard);
+        //actualFigure = new ZBlock(gameBoard);
+        //actualFigure = new SBlock(gameBoard);
     }
 
     private void repaint(){
         if (gameSurfaceView.isSurfaceReady()){
             gameSurfaceView.clearSurface();
-            gameSurfaceView.drawFigure(actualBlock);
+            gameSurfaceView.drawFigure(actualFigure);
             gameSurfaceView.drawAllBlocks(gameBoard);
             gameSurfaceView.showSurface();
         }
     }
 
     private int removeFullRows(){
-        ArrayList<Integer> numberOfRemovedRows = new ArrayList();
+        ArrayList<Integer> numberOfRemovedRows = new ArrayList<>();
         HashSet<Block> tmp = new HashSet<>();
         for(int i = 0; i <= 20; i++){
             int count = 0;
@@ -160,7 +161,7 @@ public class GameController implements Runnable{
     @Override
     public void run() {
         while(isGameRunning) {
-            if(actualBlock.canMoveDown()){
+            if(actualFigure.canMoveDown()){
                 moveDown();
             }else {
 
