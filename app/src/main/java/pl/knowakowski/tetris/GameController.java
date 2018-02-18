@@ -23,7 +23,9 @@ public class GameController implements Runnable{
     private int gameInterval = 300;
 
     private GameSurfaceView gameSurfaceView;
-    private SurfaceHolder surfaceHolder;
+    private NextFigureSurfaceView nextFigureSurfaceView;
+    private SurfaceHolder gameSurfaceHolder;
+    private SurfaceHolder nextFigureSurfaceHolder;
     private Callback callback;
     private int scorePoints;
 
@@ -33,11 +35,16 @@ public class GameController implements Runnable{
 
     private Random random;
 
-    private static Canvas canvas;
+    private static Canvas canvasGameView;
+    private static Canvas nextFigureView;
 
-    GameController(GameSurfaceView gameSurfaceView, Callback callback){
+    GameController(GameSurfaceView gameSurfaceView, NextFigureSurfaceView nextFigureSurfaceView,Callback callback){
         this.gameSurfaceView = gameSurfaceView;
-        surfaceHolder = gameSurfaceView.getHolder();
+        gameSurfaceHolder = gameSurfaceView.getHolder();
+
+        this.nextFigureSurfaceView = nextFigureSurfaceView;
+        nextFigureSurfaceHolder = nextFigureSurfaceView.getHolder();
+
         this.callback = callback;
         gameBoard = new ArraySet<>();
         random = new Random();
@@ -65,12 +72,13 @@ public class GameController implements Runnable{
     }
 
     public void start(){
-        scorePoints = 0;
+        resetGame();
+        /*scorePoints = 0;
         showScorePoints();
 
         randomNewFigure();
         createNewFigure();
-        randomNewFigure(); //TODO show randomFigure
+        randomNewFigure();*/
 
         isGameRunning = true;
 
@@ -160,7 +168,6 @@ public class GameController implements Runnable{
             nextFigure = new ZBlock(gameBoard);
         if(randomValue >= 85 && randomValue <= 99)
             nextFigure = new TBlock(gameBoard);
-
     }
 
     private boolean checkIfEndGame(){
@@ -178,18 +185,38 @@ public class GameController implements Runnable{
 
     private void repaint(){
         try{
-            canvas = this.surfaceHolder.lockCanvas();
-            synchronized (surfaceHolder){
-                canvas.drawColor(Color.BLACK);
-                gameSurfaceView.drawFigure(actualFigure, canvas);
-                gameSurfaceView.drawAllBlocks(gameBoard, canvas);
+            canvasGameView = this.gameSurfaceHolder.lockCanvas();
+            synchronized (gameSurfaceHolder){
+                canvasGameView.drawColor(Color.BLACK);
+                gameSurfaceView.drawFigure(actualFigure, canvasGameView);
+                gameSurfaceView.drawAllBlocks(gameBoard, canvasGameView);
             }
         } catch (Exception e){
             e.printStackTrace();
         } finally {
-            if(canvas != null){
+            if(canvasGameView != null){
                 try{
-                    surfaceHolder.unlockCanvasAndPost(canvas);
+                    gameSurfaceHolder.unlockCanvasAndPost(canvasGameView);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void showNextFigure(){
+        try{
+            nextFigureView = this.nextFigureSurfaceHolder.lockCanvas();
+            synchronized (nextFigureSurfaceHolder){
+                nextFigureView.drawColor(Color.BLACK);
+                nextFigureSurfaceView.showNextFigure(nextFigure, nextFigureView);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if(nextFigureView != null){
+                try{
+                    nextFigureSurfaceHolder.unlockCanvasAndPost(nextFigureView);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -240,22 +267,26 @@ public class GameController implements Runnable{
 
     private void resetGame(){
         gameBoard.clear();
+        randomNewFigure();
         createNewFigure();
+        randomNewFigure();
         repaint();
         scorePoints = 0;
         showScorePoints();
+        showNextFigure();
     }
 
     @Override
     public void run() {
         while(isGameRunning) {
             try {
-                if(!gameSurfaceView.isSurfaceReady())
+                if(!gameSurfaceView.isSurfaceReady() && !nextFigureSurfaceView.isSurfaceReady())
                     Thread.sleep(10);
                 else {
-
+                    showNextFigure();
                     if (actualFigure.canMoveDown()) {
                         moveDown();
+
                     } else {
                         if (checkIfEndGame()) {
                             resetGame();
@@ -266,9 +297,7 @@ public class GameController implements Runnable{
                         createNewFigure();
                         randomNewFigure();
 
-                        //TODO show random Figure
                         showScorePoints();
-
                     }
 
                     Thread.sleep(gameInterval);

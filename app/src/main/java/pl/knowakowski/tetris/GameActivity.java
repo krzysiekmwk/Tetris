@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class GameActivity extends Activity implements Callback {
 
     private GameSurfaceView gameSurfaceView;
+    private NextFigureSurfaceView nextFigureSurfaceView;
     private SurfaceView topSurfaceView;
 
     private Button buttonLeft;
@@ -29,6 +30,10 @@ public class GameActivity extends Activity implements Callback {
         SurfaceHolder surfaceHolderGameSurfaceView = gameSurfaceView.getHolder();
         surfaceHolderGameSurfaceView.addCallback(gameSurfaceView);
 
+        nextFigureSurfaceView = findViewById(R.id.surfaceView_nextItem);
+        SurfaceHolder surfaceHolderNextFigureSurfaceView = nextFigureSurfaceView.getHolder();
+        surfaceHolderNextFigureSurfaceView.addCallback(nextFigureSurfaceView);
+
         topSurfaceView = findViewById(R.id.surfaceView_aboveGameSurfaceView);
         topSurfaceView.setZOrderOnTop(true);
 
@@ -37,7 +42,7 @@ public class GameActivity extends Activity implements Callback {
         buttonDown = findViewById(R.id.button_down);
         buttonRotate = findViewById(R.id.button_rotate);
 
-        gameController = new GameController(gameSurfaceView, this);
+        gameController = new GameController(gameSurfaceView, nextFigureSurfaceView, this);
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
