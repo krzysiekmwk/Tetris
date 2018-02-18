@@ -33,7 +33,7 @@ public class GameActivity extends Activity implements Callback {
         buttonRotate = findViewById(R.id.button_rotate);
 
         gameController = new GameController(gameSurfaceView, this);
-        gameController.start();
+        //gameController.start();
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,5 +74,17 @@ public class GameActivity extends Activity implements Callback {
                 scorePointsTextView.setText(str);
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameController.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        gameController.start();
     }
 }

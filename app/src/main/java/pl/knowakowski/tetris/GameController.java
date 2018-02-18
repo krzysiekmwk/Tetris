@@ -69,6 +69,7 @@ public class GameController implements Runnable{
     }
 
     public void start(){
+        scorePoints = 0;
         showScorePoints();
 
         randomNewFigure();
@@ -125,6 +126,18 @@ public class GameController implements Runnable{
 
     }
 
+    public void stop(){
+        while (true){
+            try{
+                isGameRunning = false;
+                gameThread.join();
+                break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void randomNewFigure(){
         /*
             0 - 4    - IBlock - 5%
@@ -160,7 +173,7 @@ public class GameController implements Runnable{
 
     private void repaint(){
         try{
-            canvas = this.surfaceHolder.lockCanvas();
+            while ((canvas = this.surfaceHolder.lockCanvas()) == null); //Wait until surface View will created
             canvas.drawColor(Color.BLACK);
             synchronized (surfaceHolder){
                 gameSurfaceView.drawFigure(actualFigure, canvas);
@@ -235,6 +248,7 @@ public class GameController implements Runnable{
                 showScorePoints();
 
             }
+
             try {
                 Thread.sleep(gameInterval);
             } catch (InterruptedException e) {
