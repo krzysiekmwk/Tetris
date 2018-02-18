@@ -33,7 +33,6 @@ public class GameActivity extends Activity implements Callback {
         buttonRotate = findViewById(R.id.button_rotate);
 
         gameController = new GameController(gameSurfaceView, this);
-        //gameController.start();
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +62,6 @@ public class GameActivity extends Activity implements Callback {
             }
         });
 
-        System.out.println("CREATED ACVITIVY");
-
     }
 
     @Override
@@ -87,7 +84,6 @@ public class GameActivity extends Activity implements Callback {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("START");
         gameController.start();
     }
 }

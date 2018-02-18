@@ -35,16 +35,12 @@ public class GameController implements Runnable{
 
     private static Canvas canvas;
 
-    // MainThread thread;
-
     GameController(GameSurfaceView gameSurfaceView, Callback callback){
         this.gameSurfaceView = gameSurfaceView;
         surfaceHolder = gameSurfaceView.getHolder();
         this.callback = callback;
         gameBoard = new ArraySet<>();
         random = new Random();
-
-        //thread = new MainThread(gameSurfaceView.getHolder(),this);
     }
 
     public void moveLeft(){
@@ -182,9 +178,9 @@ public class GameController implements Runnable{
 
     private void repaint(){
         try{
-            while ((canvas = this.surfaceHolder.lockCanvas()) == null); //Wait until surface View will created
-            canvas.drawColor(Color.BLACK);
+            canvas = this.surfaceHolder.lockCanvas();
             synchronized (surfaceHolder){
+                canvas.drawColor(Color.BLACK);
                 gameSurfaceView.drawFigure(actualFigure, canvas);
                 gameSurfaceView.drawAllBlocks(gameBoard, canvas);
             }
@@ -243,7 +239,6 @@ public class GameController implements Runnable{
     }
 
     private void resetGame(){
-        System.out.println("GAME END");
         gameBoard.clear();
         createNewFigure();
         repaint();
@@ -255,24 +250,29 @@ public class GameController implements Runnable{
     public void run() {
         while(isGameRunning) {
             try {
-                if(actualFigure.canMoveDown()){
-                    moveDown();
-                }else {
-                    if(checkIfEndGame()){
-                        resetGame();
-                        Thread.sleep(2000);
+                if(!gameSurfaceView.isSurfaceReady())
+                    Thread.sleep(10);
+                else {
+
+                    if (actualFigure.canMoveDown()) {
+                        moveDown();
+                    } else {
+                        if (checkIfEndGame()) {
+                            resetGame();
+                            Thread.sleep(2000);
+
+                        }
+                        scorePoints += removeFullRows();
+                        createNewFigure();
+                        randomNewFigure();
+
+                        //TODO show random Figure
+                        showScorePoints();
 
                     }
-                    scorePoints += removeFullRows();
-                    createNewFigure();
-                    randomNewFigure();
 
-                    //TODO show random Figure
-                    showScorePoints();
-
+                    Thread.sleep(gameInterval);
                 }
-
-                Thread.sleep(gameInterval);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

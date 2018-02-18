@@ -51,6 +51,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         blockHeight = pixelHeight *10;
     }
 
+    public boolean isSurfaceReady() {
+        return isSurfaceReady;
+    }
+
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         isSurfaceReady = false;
