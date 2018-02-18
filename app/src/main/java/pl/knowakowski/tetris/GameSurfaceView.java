@@ -16,23 +16,6 @@ import pl.knowakowski.tetris.blocks.Figure;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
-    private Thread gameThread = null;
-    private boolean isGameRunning = false;
-    private int gameInterval = 300;
-
-    private GameSurfaceView gameSurfaceView;
-    private Callback callback;
-    private int scorePoints;
-
-    private ArraySet<Block> gameBoard;
-    private Figure actualFigure;
-    private Figure nextFigure;
-
-    private Random random;
-
-    private MainThread thread;
-
-    private Bitmap mBitmap;
     private boolean isSurfaceReady = false;
     private float blockWidth = 0;
     private float blockHeight = 0;
@@ -52,13 +35,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         super(context, attrs, defStyleAttr);
     }
 
-    /*@Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        canvas.drawBitmap(mBitmap,0,0,null);
-    }*/
-
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
@@ -67,7 +43,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
         isSurfaceReady = true;
-        //mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config. ARGB_8888);
 
         pixelWidth = (float)getWidth()/111;
         blockWidth = pixelWidth *10;
@@ -81,10 +56,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         isSurfaceReady = false;
     }
 
-    public boolean isSurfaceReady() {
-        return isSurfaceReady;
-    }
-
     private void drawBlock(int x, int y,Paint paint, Canvas canvas){
         float scaledX = x* pixelWidth + (x-1)*blockWidth;
         float scaledY = y* pixelHeight + (y-1)*blockHeight;
@@ -93,24 +64,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     }
 
     public void drawAllBlocks(ArraySet<Block> gameBoard, Canvas canvas){
-        //Canvas canvas = new Canvas(mBitmap);
-
         for (Block block: gameBoard){
             drawBlock(block.getX(),block.getY(),block.getColor(), canvas);
         }
     }
 
-    public void clearSurface(){
-        mBitmap.eraseColor(Color.TRANSPARENT);
-    }
-
-    public void showSurface(){
-        postInvalidate();
-    }
-
     public void drawFigure(Figure actualBlock, Canvas canvas) {
-        //Canvas canvas = new Canvas(mBitmap);
-
         for (Block block: actualBlock.getBlocksToDraw()){
             drawBlock(block.getX(),block.getY(),block.getColor(), canvas);
         }

@@ -20,10 +20,10 @@ public class OBlock extends Figure {
         Paint color = new Paint();
         color.setARGB(255,255,255,0);//Yellow
 
-        blocksContainer.add(new Block(4,4,color));
-        blocksContainer.add(new Block(5,4,color));
-        blocksContainer.add(new Block(4,5,color));
-        blocksContainer.add(new Block(5,5,color));
+        blocksContainer.add(new Block(4,-2,color));
+        blocksContainer.add(new Block(5,-2,color));
+        blocksContainer.add(new Block(4,-1,color));
+        blocksContainer.add(new Block(5,-1,color));
 
         rotationPoint = blocksContainer.get(2);
 

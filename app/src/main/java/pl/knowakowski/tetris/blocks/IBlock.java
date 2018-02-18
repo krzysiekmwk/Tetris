@@ -20,10 +20,10 @@ public class IBlock extends Figure{
         Paint color = new Paint();
         color.setARGB(255, 0,255,255);//Light Blue
 
-        blocksContainer.add(new Block(5,4,color));
-        blocksContainer.add(new Block(5,5,color));
-        blocksContainer.add(new Block(5,6,color));
-        blocksContainer.add(new Block(5,7,color));
+        blocksContainer.add(new Block(5,-4,color));
+        blocksContainer.add(new Block(5,-3,color));
+        blocksContainer.add(new Block(5,-2,color));
+        blocksContainer.add(new Block(5,-1,color));
 
         rotationPoint = blocksContainer.get(1);
 
