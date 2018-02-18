@@ -167,6 +167,15 @@ public class GameController implements Runnable{
 
     }
 
+    private boolean checkIfEndGame(){
+        for (Block blockInGameBoard : gameBoard) {
+            if(blockInGameBoard.getY() == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void createNewFigure(){
         actualFigure = nextFigure;
     }
@@ -233,23 +242,36 @@ public class GameController implements Runnable{
         callback.updateTextView(scorePoints + "");
     }
 
+    private void resetGame(){
+        System.out.println("GAME END");
+        gameBoard.clear();
+        createNewFigure();
+        repaint();
+        scorePoints = 0;
+        showScorePoints();
+    }
+
     @Override
     public void run() {
         while(isGameRunning) {
-            if(actualFigure.canMoveDown()){
-                moveDown();
-            }else {
-
-                scorePoints += removeFullRows();
-                createNewFigure();
-                randomNewFigure();
-
-                //TODO show random Figure
-                showScorePoints();
-
-            }
-
             try {
+                if(actualFigure.canMoveDown()){
+                    moveDown();
+                }else {
+                    if(checkIfEndGame()){
+                        resetGame();
+                        Thread.sleep(2000);
+
+                    }
+                    scorePoints += removeFullRows();
+                    createNewFigure();
+                    randomNewFigure();
+
+                    //TODO show random Figure
+                    showScorePoints();
+
+                }
+
                 Thread.sleep(gameInterval);
             } catch (InterruptedException e) {
                 e.printStackTrace();
