@@ -1,10 +1,9 @@
 package pl.knowakowski.tetris;
 
-import android.app.Activity;
-import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceHolder;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +23,7 @@ public class GameController implements Runnable{
     private int gameInterval = 300;
 
     private GameSurfaceView gameSurfaceView;
+    private SurfaceHolder surfaceHolder;
     private Callback callback;
     private int scorePoints;
 
@@ -33,11 +33,18 @@ public class GameController implements Runnable{
 
     private Random random;
 
+    private static Canvas canvas;
+
+    // MainThread thread;
+
     GameController(GameSurfaceView gameSurfaceView, Callback callback){
         this.gameSurfaceView = gameSurfaceView;
+        surfaceHolder = gameSurfaceView.getHolder();
         this.callback = callback;
         gameBoard = new ArraySet<>();
         random = new Random();
+
+        //thread = new MainThread(gameSurfaceView.getHolder(),this);
     }
 
     public void moveLeft(){
@@ -152,11 +159,23 @@ public class GameController implements Runnable{
     }
 
     private void repaint(){
-        if (gameSurfaceView.isSurfaceReady()){
-            gameSurfaceView.clearSurface();
-            gameSurfaceView.drawFigure(actualFigure);
-            gameSurfaceView.drawAllBlocks(gameBoard);
-            gameSurfaceView.showSurface();
+        try{
+            canvas = this.surfaceHolder.lockCanvas();
+            canvas.drawColor(Color.BLACK);
+            synchronized (surfaceHolder){
+                gameSurfaceView.drawFigure(actualFigure, canvas);
+                gameSurfaceView.drawAllBlocks(gameBoard, canvas);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if(canvas != null){
+                try{
+                    surfaceHolder.unlockCanvasAndPost(canvas);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
