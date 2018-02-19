@@ -76,14 +76,14 @@ public class GameActivity extends Activity implements Callback {
             }
         });
 
-        buttonDown.setOnClickListener(new View.OnClickListener() {
+        buttonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gameController.pause();
             }
         });
 
-        buttonDown.setOnClickListener(new View.OnClickListener() {
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gameController.play();

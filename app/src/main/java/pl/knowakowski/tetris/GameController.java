@@ -291,13 +291,15 @@ public class GameController implements Runnable{
                         if (checkIfEndGame()) {
                             resetGame();
                             Thread.sleep(2000);
-
                         }
-                        scorePoints += removeFullRows();
-                        createNewFigure();
-                        randomNewFigure();
+                        else {
+                            scorePoints += removeFullRows();
+                            createNewFigure();
+                            randomNewFigure();
 
-                        showScorePoints();
+                            showScorePoints();
+                        }
+
                     }
 
                     Thread.sleep(gameInterval);
