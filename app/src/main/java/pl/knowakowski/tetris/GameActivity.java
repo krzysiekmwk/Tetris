@@ -18,6 +18,8 @@ public class GameActivity extends Activity implements Callback {
     private Button buttonRight;
     private Button buttonDown;
     private Button buttonRotate;
+    private Button buttonPause;
+    private Button buttonPlay;
 
     private GameController gameController;
 
@@ -41,6 +43,8 @@ public class GameActivity extends Activity implements Callback {
         buttonRight = findViewById(R.id.button_right);
         buttonDown = findViewById(R.id.button_down);
         buttonRotate = findViewById(R.id.button_rotate);
+        buttonPause = findViewById(R.id.button_pause);
+        buttonPlay = findViewById(R.id.button_play);
 
         gameController = new GameController(gameSurfaceView, nextFigureSurfaceView, this);
 
@@ -69,6 +73,20 @@ public class GameActivity extends Activity implements Callback {
             @Override
             public void onClick(View view) {
                 gameController.rotateClick();
+            }
+        });
+
+        buttonDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameController.pause();
+            }
+        });
+
+        buttonDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameController.play();
             }
         });
 

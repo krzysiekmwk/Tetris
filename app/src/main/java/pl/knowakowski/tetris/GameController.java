@@ -307,4 +307,13 @@ public class GameController implements Runnable{
             }
         }
     }
+
+    public void pause() {
+
+    }
+
+
+    public void play() {
+
+    }
 }
