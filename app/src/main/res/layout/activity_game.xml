@@ -53,14 +53,14 @@
                     <Button
                         android:id="@+id/button_pause"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:layout_height="match_parent"
+                        android:text="@string/pause" />
 
                     <Button
                         android:id="@+id/button_play"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:layout_height="match_parent"
+                        android:text="@string/play" />
 
                 </LinearLayout>
 
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:textSize="20sp"
-                    android:text="Next Item:" />
+                    android:text="@string/next_figure" />
 
                 <pl.knowakowski.tetris.NextFigureSurfaceView
                     android:id="@+id/surfaceView_nextItem"
@@ -93,13 +93,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
-                        android:text="Score:" />
+                        android:text="@string/score" />
                     <TextView
                         android:id="@+id/textView_scorePoints"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="25sp"
-                        android:text="69" />
+                        android:textSize="25sp" />
 
                 </LinearLayout>
 
@@ -120,28 +119,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:text="Button" />
+                android:text="@string/left" />
 
             <Button
                 android:id="@+id/button_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:text="Button" />
+                android:text="@string/right" />
 
             <Button
                 android:id="@+id/button_down"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:text="Button" />
+                android:text="@string/down" />
 
             <Button
                 android:id="@+id/button_rotate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:text="Button" />
+                android:text="@string/rotate" />
 
         </LinearLayout>
 
