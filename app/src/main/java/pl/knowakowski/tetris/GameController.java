@@ -21,6 +21,7 @@ public class GameController implements Runnable{
     private Thread gameThread = null;
     private boolean isGameRunning = false;
     private int gameInterval = 300;
+    private boolean isPaused = false;
 
     private GameSurfaceView gameSurfaceView;
     private NextFigureSurfaceView nextFigureSurfaceView;
@@ -51,24 +52,31 @@ public class GameController implements Runnable{
     }
 
     public void moveLeft(){
-        actualFigure.moveLeft();
-        repaint();
+        if(!isPaused) {
+            actualFigure.moveLeft();
+            repaint();
+        }
     }
 
     public void moveRight(){
-        actualFigure.moveRight();
-        repaint();
-
+        if(!isPaused) {
+            actualFigure.moveRight();
+            repaint();
+        }
     }
 
     public void moveDown(){
-        actualFigure.moveDown();
-        repaint();
+        if(!isPaused) {
+            actualFigure.moveDown();
+            repaint();
+        }
     }
 
     public void rotateClick(){
-        actualFigure.moveRotate();
-        repaint();
+        if(!isPaused) {
+            actualFigure.moveRotate();
+            repaint();
+        }
     }
 
     public void start(){
@@ -279,6 +287,9 @@ public class GameController implements Runnable{
     @Override
     public void run() {
         while(isGameRunning) {
+            if(isPaused)
+                continue;
+
             try {
                 if(!gameSurfaceView.isSurfaceReady() && !nextFigureSurfaceView.isSurfaceReady())
                     Thread.sleep(10);
@@ -311,11 +322,11 @@ public class GameController implements Runnable{
     }
 
     public void pause() {
-
+        isPaused = true;
     }
 
 
     public void play() {
-
+        isPaused = false;
     }
 }
