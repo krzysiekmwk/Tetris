@@ -147,4 +147,8 @@ public abstract class Figure {
     public boolean canMoveDown(){
         return canMoveDown;
     }
+
+    public Block getRotationPoint() {
+        return rotationPoint;
+    }
 }
