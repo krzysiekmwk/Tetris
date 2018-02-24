@@ -3,7 +3,11 @@ package pl.knowakowski.tetris;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +29,16 @@ public class GameController implements Runnable{
 
     private GameSurfaceView gameSurfaceView;
     private NextFigureSurfaceView nextFigureSurfaceView;
+    private TopSurfaceView topSurfaceView;
+
     private SurfaceHolder gameSurfaceHolder;
     private SurfaceHolder nextFigureSurfaceHolder;
+    private SurfaceHolder topSurfaceHolder;
+
+    private static Canvas canvasGameView;
+    private static Canvas nextFigureView;
+    private static Canvas canvasTopSurface;
+
     private Callback callback;
     private int scorePoints;
 
@@ -36,15 +48,18 @@ public class GameController implements Runnable{
 
     private Random random;
 
-    private static Canvas canvasGameView;
-    private static Canvas nextFigureView;
+    int i = 0;
 
-    GameController(GameSurfaceView gameSurfaceView, NextFigureSurfaceView nextFigureSurfaceView,Callback callback){
+    GameController(GameSurfaceView gameSurfaceView, NextFigureSurfaceView nextFigureSurfaceView, TopSurfaceView topSurfaceView, Callback callback){
         this.gameSurfaceView = gameSurfaceView;
         gameSurfaceHolder = gameSurfaceView.getHolder();
 
         this.nextFigureSurfaceView = nextFigureSurfaceView;
         nextFigureSurfaceHolder = nextFigureSurfaceView.getHolder();
+
+        this.topSurfaceView = topSurfaceView;
+        topSurfaceHolder = topSurfaceView.getHolder();
+        topSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
 
         this.callback = callback;
         gameBoard = new ArraySet<>();
@@ -232,6 +247,28 @@ public class GameController implements Runnable{
         }
     }
 
+    private void showText(String text){
+        try{
+            canvasTopSurface = this.topSurfaceHolder.lockCanvas();
+            synchronized (topSurfaceHolder){
+                Paint paint = new Paint();
+                paint.setARGB(255,0,0,0);
+                canvasTopSurface.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+                topSurfaceView.drawCenterMessage(canvasTopSurface,text);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if(canvasTopSurface != null){
+                try{
+                    topSurfaceHolder.unlockCanvasAndPost(canvasTopSurface);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private int removeFullRows(){
         ArrayList<Integer> numberOfRemovedRows = new ArrayList<>();
         HashSet<Block> tmp = new HashSet<>();
@@ -287,19 +324,23 @@ public class GameController implements Runnable{
     @Override
     public void run() {
         while(isGameRunning) {
-            if(isPaused)
+            if(isPaused){
+                showText("Pause");
                 continue;
+            }
 
             try {
                 if(!gameSurfaceView.isSurfaceReady() && !nextFigureSurfaceView.isSurfaceReady())
                     Thread.sleep(10);
                 else {
+                    showText("");
                     showNextFigure();
                     if (actualFigure.canMoveDown()) {
                         moveDown();
 
                     } else {
                         if (checkIfEndGame()) {
+                            showText("GAME OVER");
                             resetGame();
                             Thread.sleep(2000);
                         }
@@ -310,7 +351,6 @@ public class GameController implements Runnable{
 
                             showScorePoints();
                         }
-
                     }
 
                     Thread.sleep(gameInterval);

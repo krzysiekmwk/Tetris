@@ -13,7 +13,7 @@ public class GameActivity extends Activity implements Callback {
 
     private GameSurfaceView gameSurfaceView;
     private NextFigureSurfaceView nextFigureSurfaceView;
-    private SurfaceView topSurfaceView;
+    private TopSurfaceView topSurfaceView;
 
     private Button buttonLeft;
     private Button buttonRight;
@@ -47,6 +47,8 @@ public class GameActivity extends Activity implements Callback {
         surfaceHolderNextFigureSurfaceView.addCallback(nextFigureSurfaceView);
 
         topSurfaceView = findViewById(R.id.surfaceView_aboveGameSurfaceView);
+        SurfaceHolder surfaceHolderTopSurfaceView = topSurfaceView.getHolder();
+        surfaceHolderTopSurfaceView.addCallback(topSurfaceView);
         topSurfaceView.setZOrderOnTop(true);
 
         buttonLeft = findViewById(R.id.button_left);
@@ -56,7 +58,7 @@ public class GameActivity extends Activity implements Callback {
         buttonPause = findViewById(R.id.button_pause);
         buttonPlay = findViewById(R.id.button_play);
 
-        gameController = new GameController(gameSurfaceView, nextFigureSurfaceView, this);
+        gameController = new GameController(gameSurfaceView, nextFigureSurfaceView, topSurfaceView,this);
 
         buttonRotate.setOnClickListener(new View.OnClickListener() {
             @Override

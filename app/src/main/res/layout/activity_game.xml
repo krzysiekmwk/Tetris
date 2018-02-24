@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <SurfaceView
+    <pl.knowakowski.tetris.TopSurfaceView
         android:id="@+id/surfaceView_aboveGameSurfaceView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00000000"/>
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:orientation="vertical"
