@@ -121,10 +121,13 @@ public abstract class Figure {
                 block.setY(pivotY + vy);
 
                 for (Block blockInGameBoard : gameBoard) {
-                    if (((blockInGameBoard.getX()) == (block.getX())) && ((blockInGameBoard.getY()) == (block.getY()))
-                            || (block.getX() <= 0) || (block.getX() >= 11)) {
+                    if (((blockInGameBoard.getX()) == (block.getX())) && ((blockInGameBoard.getY()) == (block.getY()))) {
                         canRotate = false;
                     }
+                }
+
+                if((block.getX() <= 0) || (block.getX() >= 11)){
+                    canRotate = false;
                 }
             }
         }
