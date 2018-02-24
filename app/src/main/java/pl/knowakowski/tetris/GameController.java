@@ -26,6 +26,7 @@ public class GameController implements Runnable{
     private boolean isGameRunning = false;
     private int gameInterval = 300;
     private boolean isPaused = false;
+    private boolean isGameOver = false;
 
     private GameSurfaceView gameSurfaceView;
     private NextFigureSurfaceView nextFigureSurfaceView;
@@ -67,28 +68,28 @@ public class GameController implements Runnable{
     }
 
     public void moveLeft(){
-        if(!isPaused) {
+        if(!isPaused && !isGameOver) {
             actualFigure.moveLeft();
             repaint();
         }
     }
 
     public void moveRight(){
-        if(!isPaused) {
+        if(!isPaused && !isGameOver) {
             actualFigure.moveRight();
             repaint();
         }
     }
 
     public void moveDown(){
-        if(!isPaused) {
+        if(!isPaused && !isGameOver) {
             actualFigure.moveDown();
             repaint();
         }
     }
 
     public void rotateClick(){
-        if(!isPaused) {
+        if(!isPaused && !isGameOver) {
             actualFigure.moveRotate();
             repaint();
         }
@@ -342,7 +343,9 @@ public class GameController implements Runnable{
                         if (checkIfEndGame()) {
                             showText("GAME OVER");
                             resetGame();
+                            isGameOver = true;
                             Thread.sleep(2000);
+                            isGameOver = false;
                         }
                         else {
                             scorePoints += removeFullRows();
